@@ -3,7 +3,7 @@ package com.example.mdorm.helper
 
 class QueryBuilder {
     var  query : String = "";
-
+    var numberRunFunc = 0;
     val FROM = " FROM "
     val SELECT_TABLES = "SELECT * FROM sqlite_master WHERE type='table' ORDER BY name"
     val PRAGMA_TABLE_INFO = "PRAGMA table_info("
@@ -49,23 +49,66 @@ class QueryBuilder {
     val TWO_HOLDER = "(?,?)"
 
     fun dropTable(tableName : String) : String {
-        query += "DROP_TABLE $tableName;"
+        query = "DROP_TABLE $tableName;"
         return query
     }
 
-    fun createDB(dbName : String) :String{
-        query = "CREATE DATABASE $dbName;"
-        return query
+    fun createDB(dbName : String) :QueryBuilder{
+        query = "CREATE DATABASE $dbName"
+        return this
     }
 
-    fun createTable(tableName: String , tables : String = "") : String
+    fun createTable(tableName: String , tables : Boolean) : QueryBuilder
     {
-        if(tableName != ""){
-            query += "CREATE TABLE $tableName($tables);"
-            return query
-        }
-        query += "CREATE TABLE table_name ($tableName);"
+        query += "CREATE TABLE $tableName( "
+        return this
+    }
+
+    fun createTable(tableName: String) : String
+    {
+        query = "CREATE TABLE $tableName"
         return query
+    }
+    fun addTable(valueName : String) :  QueryBuilder{
+        numberRunFunc += 1
+        if(numberRunFunc == 0){
+            query += "($$valueName "
+            return this
+        }
+        query += " $$valueName "
+        return this
+    }
+
+    fun addTable(valueName : String , end: Boolean) :  QueryBuilder{
+
+        query += " $$valueName)"
+        return this
+    }
+
+    fun integer() : QueryBuilder{
+        query += " INTEGER,"
+        return this
+    }
+
+
+    fun integer(end :Boolean) : QueryBuilder{
+        query += " INTEGER)"
+        return this
+    }
+
+    fun primary() : QueryBuilder{
+        query += " PRIMARY"
+        return this
+    }
+    fun primary(end: Boolean) : QueryBuilder{
+        query += " PRIMARY)"
+        return this
+    }
+
+    fun text() :  QueryBuilder{
+        query += " TEXT"
+
+        return this
     }
 
     fun updateColumn(tableName: String  ) :  QueryBuilder{
@@ -83,6 +126,16 @@ class QueryBuilder {
        query +=  " ORDER BY $filed";
     }
 
+    fun count(tableName: String , field :String){
+        query += "SELECT COUNT($field)FROM$field"
+    }
+    fun average(tableName: String , field :String){
+        query += "SELECT AVG($field)FROM$field"
+    }
+
+    fun sum(tableName: String , field :String){
+        query += "SELECT SUM($field)FROM$field"
+    }
     fun <T> insert(tableName : String , cols : Array<String> , values : Array<T> ){
         query += "INSERT INTO $tableName"
 
