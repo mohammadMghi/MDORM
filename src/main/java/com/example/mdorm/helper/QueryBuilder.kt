@@ -85,12 +85,14 @@ class QueryBuilder {
 
     fun <T> insert(tableName : String , cols : Array<String> , values : Array<T> ){
         query += "INSERT INTO $tableName"
+
         if(cols.isNotEmpty()){
             query += "("
             for (c in cols)
             {
-                query += " $c ,"
+                query += "$c ,"
             }
+            query = removeSpecificCharAtString(query , query.length - 1 , ',')
             query += ")"
             query += " VALUES "
             query += "("
@@ -99,24 +101,29 @@ class QueryBuilder {
                 query += " $v ,"
             }
             query += ")"
-
+            query = removeSpecificCharAtString(query , query.length - 2 , ',')
         }
 
     }
 
+    private fun removeSpecificCharAtString(str: String, position: Int, chr: Char? = null) : String{
+        val build: StringBuilder = StringBuilder(str)
+        var charp =str[position];
+        if(charp == chr){
+            build.deleteCharAt(position )
+        }
+        return build.toString()
+
+    }
+
+    fun deleteCol(tableName : String ,colName : String , colValue :String   ){
+        query += "DELETE FROM $tableName WHERE $colName = $colValue"
+    }
 
     fun getQuery1() : String{
+        val query = removeSpecificCharAtString(query , query.length - 1 , ',')
 
-        val build: StringBuilder = StringBuilder(query)
-        if(query.length > 5){
-            if(query[query.length - 1] == ','){
-                build.deleteCharAt(query.length -1 )
-            }
-        }
-
-
-
-        return  "$build;"
+        return  "$query;"
     }
 
 
