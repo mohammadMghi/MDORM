@@ -1,4 +1,5 @@
 package com.example.mdorm.db
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.example.mdorm.helper.QueryBuilder
 import java.util.Objects
@@ -17,7 +18,7 @@ interface Database {
 
     fun removeAll(objQuery : String)
 
-
+    fun <T> readCourses(tableName : String): Cursor
 
     fun close()
 }

@@ -1,8 +1,12 @@
 package com.example.mdorm.db
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MdSqliteDatabase(context: Context, dbName: String ,private var sqlCreateDB : String) :SQLiteOpenHelper(context, dbName, null, 1) , Database {
 
@@ -50,4 +54,18 @@ class MdSqliteDatabase(context: Context, dbName: String ,private var sqlCreateDB
         db.execSQL(objQuery)
         return
     }
+
+    @SuppressLint("Recycle")
+    override fun <T> readCourses(tableName : String): Cursor {
+        val db = this.writableDatabase
+        val cursorCourses: Cursor = db.rawQuery("SELECT * FROM $tableName", null)
+
+
+        return cursorCourses;
+    }
+
+    fun getData(){
+        val db = this.writableDatabase
+    }
+
 }
