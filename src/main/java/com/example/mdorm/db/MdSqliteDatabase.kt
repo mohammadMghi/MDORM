@@ -60,7 +60,6 @@ class MdSqliteDatabase(context: Context, dbName: String ,private var sqlCreateDB
         val db = this.writableDatabase
         val cursorCourses: Cursor = db.rawQuery("SELECT * FROM $tableName", null)
 
-
         return cursorCourses;
     }
 
