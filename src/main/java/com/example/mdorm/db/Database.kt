@@ -7,15 +7,15 @@ import java.util.Objects
 interface Database {
     fun openOrCreateDatabase(): SQLiteDatabase?
 
-    fun insert(obj :Objects) : Long
+    fun insert(objQuery : String)
 
-    fun <T> store(collection: Collection<T>) : Int
+    fun store(objQuery : String)
 
-    fun update(obj: Objects);
+    fun update(objQuery : String);
 
-    fun <T> remove(cls : Class<T>)
+    fun  remove(objQuery : String)
 
-    fun <T> removeAll(cls :Class<T>)
+    fun removeAll(objQuery : String)
 
 
 
