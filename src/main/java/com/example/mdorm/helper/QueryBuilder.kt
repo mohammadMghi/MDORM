@@ -72,16 +72,16 @@ class QueryBuilder {
     fun addTable(valueName : String) :  QueryBuilder{
         numberRunFunc += 1
         if(numberRunFunc == 0){
-            query += "($$valueName "
+            query += "($valueName "
             return this
         }
-        query += " $$valueName "
+        query += "$valueName "
         return this
     }
 
     fun addTable(valueName : String , end: Boolean) :  QueryBuilder{
 
-        query += " $$valueName)"
+        query += " $valueName)"
         return this
     }
 
@@ -89,8 +89,10 @@ class QueryBuilder {
         query += " INTEGER,"
         return this
     }
-
-
+    fun primaryInteger() : QueryBuilder{
+        query += " INTEGER PRIMARY KEY,"
+        return this
+    }
     fun integer(end :Boolean) : QueryBuilder{
         query += " INTEGER)"
         return this

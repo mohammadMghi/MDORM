@@ -17,11 +17,12 @@ class MdSqliteDatabase(context: Context, dbName: String ,private var sqlCreateDB
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         val db = this.writableDatabase
+        onCreate(db);
     }
 
     override fun openOrCreateDatabase(): SQLiteDatabase? {
         val db = this.writableDatabase
-        db?.execSQL("")
+        onCreate(db)
         return db
     }
 
