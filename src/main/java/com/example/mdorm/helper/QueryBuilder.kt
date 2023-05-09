@@ -89,7 +89,7 @@ class QueryBuilder {
         query += " INTEGER,"
         return this
     }
-    fun primaryInteger() : QueryBuilder{
+    fun primaryIntegerKey() : QueryBuilder{
         query += " INTEGER PRIMARY KEY,"
         return this
     }
